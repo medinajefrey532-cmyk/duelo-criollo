@@ -1,0 +1,60 @@
+EVIDENCIA DE DESARROLLO E HISTORIAL DE PARTIDAS
+Proyecto: Duelo Criollo (Tres en Raya en React)
+Estudiante: Jefrey Encarnacion Medina
+Matrícula: 100687695
+
+========================================================================
+PARTE 1: BITÁCORA DE DESARROLLO (PASOS REALIZADOS)
+========================================================================
+
+1. Creación del Entorno de Trabajo:
+   - Inicialización del proyecto con Vite y React.
+   - Creación de la estructura de carpetas: src/components (componentes visuales) y src/logic (lógica pura).
+
+2. Implementación de la Lógica del Tablero (src/logic/board.js):
+   - Definición de las 8 combinaciones ganadoras (filas, columnas y diagonales) en WINNER_COMBOS.
+   - Función checkWinner para evaluar si un jugador logró tres en línea.
+   - Función checkEndGame para detectar empate cuando las 9 casillas estén ocupadas.
+   - Configuración de los jugadores: Quisqueyano (X) y Tropical (O).
+
+3. Construcción de Componentes:
+   - Square.jsx: Casilla individual con soporte para clic y resalto de casillas ganadoras.
+   - ScoreBoard.jsx: Marcador visual de victorias (Quisqueyano, Tropical) y empates.
+   - WinnerModal.jsx: Ventana modal que anuncia al ganador o el empate y permite reiniciar.
+   - MatchHistory.jsx: Componente que despliega las últimas partidas jugadas.
+
+4. Gestión del Estado y Persistencia (src/App.jsx):
+   - Implementación de useState para el tablero, turno actual, ganador, puntajes e historial.
+   - Implementación de useEffect para guardar y recuperar automáticamente en localStorage.
+   - Inmutabilidad al actualizar el tablero mediante copias con [...board].
+
+5. Diseño y Centrado:
+   - Paleta con estética dominicana (azul profundo, rojo y blanco).
+   - Centrado perfecto del juego en pantalla y diseño responsivo.
+
+========================================================================
+PARTE 2: HISTORIAL DE PARTIDAS DE PRUEBA (EVIDENCIA DE FUNCIONAMIENTO)
+========================================================================
+
+Registro obtenido durante la sesión de pruebas en http://localhost:5173/:
+
+Partida 1:
+- Jugadores: Quisqueyano (X) vs Tropical (O)
+- Resultado: Victoria Quisqueyano (X) - Ganó por diagonal [0, 4, 8]
+- Estado del marcador: Quisqueyano: 1 | Tropical: 0 | Empates: 0
+
+Partida 2:
+- Jugadores: Quisqueyano (X) vs Tropical (O)
+- Resultado: Victoria Tropical (O) - Ganó por columna central [1, 4, 7]
+- Estado del marcador: Quisqueyano: 1 | Tropical: 1 | Empates: 0
+
+Partida 3:
+- Jugadores: Quisqueyano (X) vs Tropical (O)
+- Resultado: Empate (Se trancó el juego - 9 casillas ocupadas)
+- Estado del marcador: Quisqueyano: 1 | Tropical: 1 | Empates: 1
+
+
+Conclusión de la prueba:
+- El cambio de turnos funcionó correctamente.
+- La detección de ganadores y empates respondió en cada caso.
+- El marcador y el historial persistieron tras recargar la página.

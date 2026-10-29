@@ -1,0 +1,373 @@
+/* ==========================================================================
+   Variables de Tema y Paleta de Colores
+   ========================================================================== */
+:root {
+  --rd-blue: #002F6C;
+  --rd-red: #CE1126;
+  --rd-white: #FFFFFF;
+  --rd-gold: #FFD700;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --shadow-glow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* ==========================================================================
+   Contenedor Principal de la Tarjeta del Juego
+   ========================================================================== */
+.board-game {
+  width: 100%;
+  max-width: 520px;
+  background: var(--card-bg);
+  /* Efecto de cristal translúcido (Glassmorphism) */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 2rem 1.8rem;
+  box-shadow: var(--shadow-glow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+/* ==========================================================================
+   Cabecera del Juego y Títulos
+   ========================================================================== */
+.game-header {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.game-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  /* Efecto degradado metálico en el título */
+  background: linear-gradient(90deg, #FFFFFF, var(--rd-gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.35rem;
+}
+
+.game-subtitle {
+  font-size: 0.92rem;
+  color: #cbd5e1;
+}
+
+/* ==========================================================================
+   Marcador de Puntos (ScoreBoard)
+   ========================================================================== */
+.scoreboard-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.score-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 0.65rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.score-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Borde inferior distintivo por participante */
+.score-card.player-x { border-bottom: 3px solid #38bdf8; }
+.score-card.player-o { border-bottom: 3px solid #f87171; }
+.score-card.ties { border-bottom: 3px solid var(--rd-gold); }
+
+.score-icon { font-size: 1.2rem; margin-bottom: 2px; }
+.score-name { font-size: 0.75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; }
+.score-points { font-size: 1.5rem; font-weight: 800; color: #fff; }
+
+/* Botón secundario para reiniciar marcadores */
+.btn-reset-scores {
+  grid-column: 1 / -1;
+  background: transparent;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: #94a3b8;
+  font-size: 0.75rem;
+  padding: 0.35rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset-scores:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* ==========================================================================
+   Indicadores de Turno Activo
+   ========================================================================== */
+.turn-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+}
+
+.turn-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #94a3b8;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.turn-indicators {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.turn-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0.5;
+  transition: all 0.25s ease;
+}
+
+/* Resalto de turno activo para Quisqueyano (X) */
+.active-turn-x {
+  opacity: 1;
+  background: rgba(0, 47, 108, 0.65);
+  border-color: #38bdf8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+  transform: scale(1.04);
+}
+
+/* Resalto de turno activo para Tropical (O) */
+.active-turn-o {
+  opacity: 1;
+  background: rgba(206, 17, 38, 0.65);
+  border-color: #f87171;
+  box-shadow: 0 0 15px rgba(248, 113, 113, 0.4);
+  transform: scale(1.04);
+}
+
+/* ==========================================================================
+   Cuadrícula del Tablero 3x3 (game-board)
+   ========================================================================== */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  max-width: 330px;
+  margin: 0 auto 1.4rem auto;
+}
+
+/* Casilla individual */
+.square {
+  aspect-ratio: 1 / 1;
+  background: rgba(255, 255, 255, 0.07);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto hover al pasar el cursor sobre la casilla */
+.square:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px) scale(1.02);
+}
+
+/* Efecto visual destacado sobre las casillas ganadoras */
+.square.is-winning {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(206, 17, 38, 0.4));
+  border-color: var(--rd-gold);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  animation: pulse 1s infinite alternate;
+}
+
+/* Animación de pulsación para las casillas triunfadoras */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+/* ==========================================================================
+   Botón Principal de Reinicio del Tablero
+   ========================================================================== */
+.btn-primary-dominican {
+  background: linear-gradient(135deg, #002F6C 0%, #CE1126 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.7rem 1.8rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(206, 17, 38, 0.35);
+  transition: all 0.25s ease;
+}
+
+.btn-primary-dominican:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 47, 108, 0.5);
+}
+
+/* ==========================================================================
+   Modal Emergente de Victoria o Empate
+   ========================================================================== */
+.winner-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Animación de desvanecimiento para el fondo del modal */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Tarjeta contenedora del modal */
+.winner-card {
+  background: linear-gradient(145deg, #0b1a3d, #1e0912);
+  border: 2px solid var(--rd-gold);
+  border-radius: 24px;
+  padding: 2.2rem;
+  text-align: center;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 215, 0, 0.2);
+  animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Animación de entrada con zoom elástico */
+@keyframes zoomIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.winner-badge {
+  background: var(--rd-gold);
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.winner-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.winner-symbol {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.winner-symbol .square {
+  width: 90px;
+  height: 90px;
+  pointer-events: none;
+}
+
+.tie-icon {
+  font-size: 3.5rem;
+}
+
+.winner-description {
+  font-size: 0.95rem;
+  color: #cbd5e1;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Sección de Historial de Partidas
+   ========================================================================== */
+.history-container {
+  width: 100%;
+  margin-top: 1.3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 0.9rem;
+}
+
+.history-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #cbd5e1;
+}
+
+.history-result {
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ==========================================================================
+   Pie de Página (Footer)
+   ========================================================================== */
+.game-footer {
+  margin-top: 1.3rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: #94a3b8;
+}
+
+.game-footer strong {
+  color: #fff;
+}
